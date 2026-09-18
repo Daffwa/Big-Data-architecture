@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Big Data Processing Architectures | Interactive Infographic</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#ecfeff',
+              100: '#cffafe',
+              500: '#06b6d4',
+              600: '#0891b2',
+              700: '#0e7490',
+            },
+            dark: {
+              900: '#0a0f1d',
+              800: '#111827',
+              700: '#1f293d',
+              600: '#374151'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glow-cyan {
+      box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.3);
+    }
+    .glow-purple {
+      box-shadow: 0 0 35px -5px rgba(168, 85, 247, 0.3);
+    }
+    .glow-emerald {
+      box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.3);
+    }
+    .glow-amber {
+      box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.3);
+    }
+    .gradient-border {
+      position: relative;
+      border-radius: 1rem;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0f1d;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f293d;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0891b2;
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-slate-100 font-sans antialiased min-h-screen selection:bg-cyan-500 selection:text-white">
+
+  <!-- TOP NAVIGATION -->
+  <nav class="sticky top-0 z-50 backdrop-blur-xl bg-dark-900/80 border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-cyan-500/20">
+            ⚡
+          </div>
+          <div>
+            <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-cyan-400 bg-clip-text text-transparent">
+              DataArch.io
+            </span>
+            <span class="hidden sm:inline-block ml-2 text-xs px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono">
+              v2.0 Big Data Guide
+            </span>
+          </div>
+        </div>
+
+        <div class="hidden md:flex items-center space-x-1 font-medium text-sm text-slate-300">
+          <a href="#poster-section" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-slate-800/60 transition">Poster AI</a>
+          <a href="#architectures" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-slate-800/60 transition">4 Arsitektur</a>
+          <a href="#comparison" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-slate-800/60 transition">Matriks Komparasi</a>
+          <a href="#capstone-guide" class="px-3 py-2 rounded-lg hover:text-cyan-400 hover:bg-slate-800/60 transition">Panduan Capstone</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <a href="https://github.com" target="_blank" class="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            <span>GitHub Pages</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header class="relative overflow-hidden pt-12 pb-20 border-b border-slate-800">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-20%,rgba(6,182,212,0.15),rgba(255,255,255,0))]"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-semibold tracking-wide uppercase mb-6 animate-pulse">
+        🚀 Kurikulum & Engineering Masterclass
+      </div>
+      <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
+        Evolusi Arsitektur <br class="hidden sm:inline" />
+        <span class="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+          Pemrosesan Big Data
+        </span>
+      </h1>
+      <p class="max-w-3xl mx-auto text-base sm:text-lg text-slate-400 leading-relaxed mb-8">
+        Panduan komprehensif memahami bagaimana industri teknologi mengolah miliaran data: mulai dari pemrosesan tumpukan periodik 
+        <strong class="text-slate-200">Batch Processing</strong>, pendekatan hibrida <strong class="text-slate-200">Lambda</strong>, 
+        revolusi aliran tunggal <strong class="text-slate-200">Kappa</strong>, hingga standar modern <strong class="text-cyan-400 font-semibold">Lakehouse Medallion</strong>.
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="#architectures" class="px-6 py-3.5 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold text-sm shadow-lg shadow-cyan-500/25 transition transform hover:-translate-y-0.5">
+          Eksplorasi 4 Arsitektur
+        </a>
+        <a href="#poster-section" class="px-6 py-3.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 font-semibold text-sm transition">
+          Lihat Poster Infografis AI
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- INFOGRAPHIC POSTER SHOWCASE SECTION -->
+  <section id="poster-section" class="py-16 bg-dark-800/60 border-b border-slate-800 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-10">
+        <span class="text-xs font-bold text-cyan-400 tracking-wider uppercase">Visual Overview</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-white mt-1">Master Poster Infografis AI</h2>
+        <p class="text-slate-400 text-sm mt-2 max-w-2xl mx-auto">
+          Peta konsep visual yang merangkum keempat arsitektur dalam tata letak isometrik futuristik beresolusi tinggi.
+        </p>
+      </div>
+
+      <div class="relative group max-w-5xl mx-auto rounded-2xl overflow-hidden border border-slate-700 bg-slate-900 shadow-2xl glow-cyan">
+        <img src="assets/bigdata_poster.jpg" alt="Big Data Architectures Poster" class="w-full h-auto object-cover transform group-hover:scale-[1.01] transition duration-500 cursor-pointer" onclick="openModal('assets/bigdata_poster.jpg')">
+        <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-dark-900 via-dark-900/80 to-transparent p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div>
+            <h4 class="text-white font-bold text-base">Modern Big Data Processing Architectures (3D Blueprint)</h4>
+            <p class="text-slate-400 text-xs">Klik gambar untuk melihat dalam ukuran penuh (High Definition).</p>
+          </div>
+          <button onclick="openModal('assets/bigdata_poster.jpg')" class="px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-dark-900 font-bold text-xs flex items-center gap-2 shadow-lg transition">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            Perbesar Gambar (Zoom)
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ARCHITECTURES DETAILED SECTION -->
+  <section id="architectures" class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-xs font-bold text-cyan-400 tracking-wider uppercase">Deep Dive Architecture</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-white mt-2">Empat Pilar Arsitektur Pemrosesan</h2>
+        <p class="text-slate-400 text-sm sm:text-base mt-3">
+          Klik tab di bawah untuk mempelajari cara kerja internal, kelebihan, kekurangan, analogi kehidupan nyata, dan studi kasus industri dari masing-masing arsitektur.
+        </p>
+
+        <!-- INTERACTIVE TABS -->
+        <div class="flex flex-wrap justify-center gap-2 mt-8 p-1.5 bg-dark-800 rounded-2xl border border-slate-700/80">
+          <button onclick="switchTab('batch')" id="tab-batch" class="tab-btn px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition flex items-center gap-2 bg-cyan-500 text-white shadow-md">
+            <span>📦</span> 1. Batch Processing
+          </button>
+          <button onclick="switchTab('lambda')" id="tab-lambda" class="tab-btn px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-400 hover:text-white transition flex items-center gap-2">
+            <span>⚡</span> 2. Lambda (Hybrid)
+          </button>
+          <button onclick="switchTab('kappa')" id="tab-kappa" class="tab-btn px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-400 hover:text-white transition flex items-center gap-2">
+            <span>🌊</span> 3. Kappa (Stream)
+          </button>
+          <button onclick="switchTab('medallion')" id="tab-medallion" class="tab-btn px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm text-slate-400 hover:text-white transition flex items-center gap-2">
+            <span>🏅</span> 4. Lakehouse Medallion
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB CONTENT CONTAINER -->
+      <div class="mt-6">
+
+        <!-- 1. BATCH ARCHITECTURE -->
+        <div id="content-batch" class="tab-content block animate-fadeIn">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 space-y-6">
+              <div class="gradient-border p-6 sm:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="px-3 py-1 rounded-md bg-blue-500/20 text-blue-400 border border-blue-500/30 text-xs font-mono font-bold">Era 2004 - 2012</span>
+                  <h3 class="text-2xl font-bold text-white">Batch Processing Architecture</h3>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                  Arsitektur komputasi tradisional di mana data dikumpulkan dalam satu periode waktu tertentu (misal: harian, mingguan, atau bulanan), kemudian diproses secara serentak dalam satu kelompok besar (*batch*) terjadwal.
+                </p>
+
+                <!-- REAL-WORLD ANALOGY -->
+                <div class="p-4 rounded-xl bg-blue-950/30 border border-blue-800/40 mb-6">
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">🧺</span>
+                    <div>
+                      <h5 class="text-xs font-bold text-blue-300 uppercase tracking-wider">Analogi Mahasiswa</h5>
+                      <p class="text-slate-300 text-xs mt-1">
+                        <strong>Mencuci Baju di Akhir Pekan:</strong> Anda tidak mencuci 1 kaos kotor setiap kali selesai ganti baju. Anda menunggu sampai keranjang cucian penuh di hari Minggu, baru mencuci semuanya sekaligus dengan mesin cuci. Sangat hemat detergen dan listrik, tapi kaos Anda tidak langsung bersih detik itu juga.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- HOW IT WORKS FLOW -->
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Alur Kerja Sistem (Workflow):</h4>
+                <div class="space-y-3 font-mono text-xs">
+                  <div class="flex items-center gap-3 p-3 rounded-lg bg-dark-800 border border-slate-800">
+                    <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">1</span>
+                    <span class="text-slate-300"><strong class="text-white">Ingestion:</strong> File log/transaksi diunggah secara periodik ke penyimpanan HDFS / Cloud Storage.</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 rounded-lg bg-dark-800 border border-slate-800">
+                    <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">2</span>
+                    <span class="text-slate-300"><strong class="text-white">Schedule:</strong> Pengatur jadwal (Airflow / Cron Job) memicu proses pada jam 00:00 malam saat server sepi.</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 rounded-lg bg-dark-800 border border-slate-800">
+                    <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">3</span>
+                    <span class="text-slate-300"><strong class="text-white">Compute:</strong> Apache Spark / MapReduce memecah komputasi ke puluhan worker node secara terdistribusi.</span>
+                  </div>
+                  <div class="flex items-center gap-3 p-3 rounded-lg bg-dark-800 border border-slate-800">
+                    <span class="w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center font-bold">4</span>
+                    <span class="text-slate-300"><strong class="text-white">Output:</strong> Hasil agregasi disimpan ke Data Warehouse untuk dibaca dashboard pagi hari.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- CODE SNIPPET -->
+              <div class="gradient-border p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-mono text-cyan-400 font-bold">PySpark Batch Job (Sample)</span>
+                  <span class="text-xs text-slate-500">Scheduled Daily</span>
+                </div>
+                <pre class="bg-dark-900 p-4 rounded-xl text-xs font-mono text-slate-300 overflow-x-auto border border-slate-800"><code><span class="text-purple-400">from</span> pyspark.sql <span class="text-purple-400">import</span> SparkSession
+
+spark = SparkSession.builder.appName(<span class="text-emerald-400">"DailySalesBatch"</span>).getOrCreate()
+
+<span class="text-slate-500"># Baca seluruh data penjualan kemarin dalam 1 kali proses</span>
+df = spark.read.parquet(<span class="text-emerald-400">"hdfs://cluster/raw_data/sales/2026-09-18/"</span>)
+
+<span class="text-slate-500"># Agregasi total omset per cabang toko</span>
+daily_report = df.groupBy(<span class="text-emerald-400">"branch_id"</span>).sum(<span class="text-emerald-400">"total_price"</span>)
+
+<span class="text-slate-500"># Simpan hasil ringkas ke Data Warehouse</span>
+daily_report.write.mode(<span class="text-emerald-400">"overwrite"</span>).jdbc(url=dwh_url, table=<span class="text-emerald-400">"fact_daily_sales"</span>)</code></pre>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 space-y-6">
+              <!-- PROS & CONS -->
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <span>⚖️</span> Kelebihan & Kekurangan
+                </h4>
+                <div class="space-y-3 text-xs">
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Akurasi 100%:</strong> Seluruh data lengkap tersedia sebelum dihitung, tidak ada risiko data telat terlewat.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Biaya Efisien:</strong> Server komputasi bisa dimatikan saat proses batch sudah selesai.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-red-950/20 border border-red-800/30 text-red-300">
+                    <span class="text-red-400 font-bold">✖</span>
+                    <span><strong>Latensi Sangat Tinggi (Jam s/d Hari):</strong> Tidak berguna untuk kebutuhan tanggap darurat, fraud detection, atau live monitoring.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- TECH STACK -->
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Teknologi Utama</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Hadoop HDFS</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">MapReduce</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Spark (Batch)</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Hive</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Airflow</span>
+                </div>
+              </div>
+
+              <!-- USE CASE -->
+              <div class="gradient-border p-6 bg-gradient-to-b from-dark-800 to-dark-900">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-2">Kasus Penggunaan Industri</h4>
+                <p class="text-slate-300 text-xs leading-relaxed">
+                  Laporan rekonsiliasi akhir hari perbankan (*End-of-Day Settlement*), perhitungan gaji bulanan karyawan, kalkulasi pajak korporasi, dan pelatihan model Machine Learning berbasis data 5 tahun terakhir.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. LAMBDA ARCHITECTURE -->
+        <div id="content-lambda" class="tab-content hidden animate-fadeIn">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 space-y-6">
+              <div class="gradient-border p-6 sm:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="px-3 py-1 rounded-md bg-purple-500/20 text-purple-400 border border-purple-500/30 text-xs font-mono font-bold">Era 2011 - 2015</span>
+                  <h3 class="text-2xl font-bold text-white">Lambda Architecture (Dual Pipeline)</h3>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                  Diciptakan oleh Nathan Marz untuk menjawab kebutuhan *real-time* tanpa mengorbankan akurasi data. Arsitektur ini memecah data masuk menjadi **dua jalur paralel**: <em>Speed Layer</em> (cepat tapi estimasi) dan <em>Batch Layer</em> (lambat tapi presisi), lalu menggabungkannya di <em>Serving Layer</em>.
+                </p>
+
+                <!-- REAL-WORLD ANALOGY -->
+                <div class="p-4 rounded-xl bg-purple-950/30 border border-purple-800/40 mb-6">
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">🍔</span>
+                    <div>
+                      <h5 class="text-xs font-bold text-purple-300 uppercase tracking-wider">Analogi Mahasiswa</h5>
+                      <p class="text-slate-300 text-xs mt-1">
+                        <strong>Restoran Cepat Saji (Kasir vs Akuntan):</strong> Kasir depan mencatat struk cepat-cepat dan memberi perkiraan antrean (Speed Layer). Namun di malam hari, manajer akuntansi menghitung ulang semua uang fisik di brankas dan mencocokkannya dengan pembukuan resmi (Batch Layer) untuk menimpa angka perkiraan kasir jika ada selisih.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- THREE LAYERS BREAKDOWN -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs mb-4">
+                  <div class="p-3 rounded-xl bg-dark-800 border border-purple-800/40">
+                    <div class="font-bold text-purple-400 mb-1">1. Speed Layer (Hot)</div>
+                    <p class="text-slate-400 text-[11px]">Memproses data live via Kafka & Spark Streaming untuk menyajikan data beberapa detik terakhir.</p>
+                  </div>
+                  <div class="p-3 rounded-xl bg-dark-800 border border-blue-800/40">
+                    <div class="font-bold text-blue-400 mb-1">2. Batch Layer (Cold)</div>
+                    <p class="text-slate-400 text-[11px]">Menyimpan data mentah permanen di HDFS dan menghitung ulang secara masif setiap malam.</p>
+                  </div>
+                  <div class="p-3 rounded-xl bg-dark-800 border border-emerald-800/40">
+                    <div class="font-bold text-emerald-400 mb-1">3. Serving Layer</div>
+                    <p class="text-slate-400 text-[11px]">Menggabungkan hasil query dari Real-Time View dan Batch View saat dipanggil user.</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- THE LAMBDA PROBLEM -->
+              <div class="p-5 rounded-xl bg-red-950/20 border border-red-800/40 text-xs">
+                <h4 class="font-bold text-red-400 flex items-center gap-2 mb-1">
+                  <span>⚠️</span> Masalah Terbesar Arsitektur Lambda (The Lambda Pain)
+                </h4>
+                <p class="text-slate-300 leading-relaxed">
+                  <strong>Duplikasi Logika Bisnis:</strong> Developer harus menulis kode rumus yang sama <em>dua kali</em> dalam dua bahasa/teknologi berbeda (misal: satu ditulis di Java untuk Apache Storm di Speed Layer, dan satu lagi di Scala/SQL untuk Hive di Batch Layer). Ketika ada perubahan rumus bisnis, sinkronisasi dua layer ini sering menghasilkan data yang tidak cocok (*data discrepancy*).
+                </p>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 space-y-6">
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <span>⚖️</span> Kelebihan & Kekurangan
+                </h4>
+                <div class="space-y-3 text-xs">
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Terbaik di Masanya:</strong> Memberikan pandangan data real-time sekaligus menjamin kebenaran data historis.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Fault Tolerant:</strong> Jika speed layer crash, batch layer malam hari akan memperbaiki semua data yang hilang.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-red-950/20 border border-red-800/30 text-red-300">
+                    <span class="text-red-400 font-bold">✖</span>
+                    <span><strong>Kompleksitas Ekstrem:</strong> Memelihara dua infrastruktur berbeda secara bersamaan sangat mahal dan sulit di-debug.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Teknologi Utama</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Kafka</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Storm / Flink</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Hadoop HDFS</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache HBase / Cassandra</span>
+                </div>
+              </div>
+
+              <div class="gradient-border p-6 bg-gradient-to-b from-dark-800 to-dark-900">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-2">Kasus Penggunaan Industri</h4>
+                <p class="text-slate-300 text-xs leading-relaxed">
+                  Twitter Trending Topics awal tahun 2012, deteksi klik iklan penipuan (*ad-click fraud*), dan sistem rekomendasi e-commerce generasi pertama.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. KAPPA ARCHITECTURE -->
+        <div id="content-kappa" class="tab-content hidden animate-fadeIn">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 space-y-6">
+              <div class="gradient-border p-6 sm:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="px-3 py-1 rounded-md bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 text-xs font-mono font-bold">Era 2014 - Sekarang</span>
+                  <h3 class="text-2xl font-bold text-white">Kappa Architecture (Stream-First)</h3>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                  Diusulkan oleh Jay Kreps (pencipta Kafka) sebagai solusi atas rumitnya arsitektur Lambda. Filosofi utamanya: <strong>"Hapus Batch Layer! Perlakukan semua data sebagai aliran (stream) tunggal tiada akhir."</strong> Data historis hanyalah stream masa lalu yang bisa diputar ulang (*replay*).
+                </p>
+
+                <!-- REAL-WORLD ANALOGY -->
+                <div class="p-4 rounded-xl bg-cyan-950/30 border border-cyan-800/40 mb-6">
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">📹</span>
+                    <div>
+                      <h5 class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Analogi Mahasiswa</h5>
+                      <p class="text-slate-300 text-xs mt-1">
+                        <strong>Rekaman CCTV 24 Jam:</strong> CCTV merekam terus tanpa jeda. Jika Anda ingin melihat apa yang terjadi detik ini, tonton live feed-nya. Jika ingin tahu siapa yang mencuri helm minggu lalu, Anda tidak butuh kamera baru—cukup *rewind* (putar balik) rekaman CCTV yang sama ke tanggal kejadian.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- CORE MECHANISM -->
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Bagaimana Cara Kerja "Data Reprocessing" di Kappa?</h4>
+                <div class="space-y-3 font-mono text-xs">
+                  <div class="p-3 rounded-lg bg-dark-800 border border-slate-800 text-slate-300">
+                    <span class="text-cyan-400 font-bold">1. Single Codebase:</span> Hanya ada satu kode pengolahan (misal: Apache Spark Streaming atau Flink).
+                  </div>
+                  <div class="p-3 rounded-lg bg-dark-800 border border-slate-800 text-slate-300">
+                    <span class="text-cyan-400 font-bold">2. Append-Only Log:</span> Semua event masuk disimpan di Kafka dengan masa simpan lama (*long retention*).
+                  </div>
+                  <div class="p-3 rounded-lg bg-dark-800 border border-slate-800 text-slate-300">
+                    <span class="text-cyan-400 font-bold">3. Replay from Offset 0:</span> Jika rumus bisnis diubah, hidupkan instance baru dari kode streaming Anda, lalu arahkan pembacaan ke awal log (Offset 0). Selesai!
+                  </div>
+                </div>
+              </div>
+
+              <!-- CODE SNIPPET -->
+              <div class="gradient-border p-6">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-mono text-cyan-400 font-bold">Spark Structured Streaming (Single Pipeline)</span>
+                  <span class="text-xs text-slate-500">Continuous Logic</span>
+                </div>
+                <pre class="bg-dark-900 p-4 rounded-xl text-xs font-mono text-slate-300 overflow-x-auto border border-slate-800"><code><span class="text-slate-500"># Membaca dari Kafka secara real-time maupun historical replay</span>
+stream_df = spark.readStream \
+    .format(<span class="text-emerald-400">"kafka"</span>) \
+    .option(<span class="text-emerald-400">"subscribe"</span>, <span class="text-emerald-400">"live-trades"</span>) \
+    .option(<span class="text-emerald-400">"startingOffsets"</span>, <span class="text-emerald-400">"earliest"</span>) \
+    .load()
+
+<span class="text-slate-500"># Logika yang sama untuk data live maupun data replay</span>
+processed = stream_df.select(from_json(col(<span class="text-emerald-400">"value"</span>), schema).alias(<span class="text-emerald-400">"data"</span>)) \
+    .groupBy(window(col(<span class="text-emerald-400">"data.timestamp"</span>), <span class="text-emerald-400">"1 minute"</span>), col(<span class="text-emerald-400">"data.symbol"</span>)) \
+    .agg(avg(<span class="text-emerald-400">"data.price"</span>).alias(<span class="text-emerald-400">"vwap"</span>))</code></pre>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 space-y-6">
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <span>⚖️</span> Kelebihan & Kekurangan
+                </h4>
+                <div class="space-y-3 text-xs">
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>1 Basis Kode:</strong> Tidak ada duplikasi kode logika. Perawatan sistem jauh lebih sederhana.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Konsistensi Data:</strong> Tidak ada perbedaan hitungan antara data real-time dan data historis.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-red-950/20 border border-red-800/30 text-red-300">
+                    <span class="text-red-400 font-bold">✖</span>
+                    <span><strong>Mahal di Storage Log:</strong> Menyimpan seluruh riwayat log bertahun-tahun di Kafka membutuhkan biaya storage yang besar.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Teknologi Utama</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Kafka / Redpanda</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Flink</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Spark Structured Streaming</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">ClickHouse</span>
+                </div>
+              </div>
+
+              <div class="gradient-border p-6 bg-gradient-to-b from-dark-800 to-dark-900">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-2">Kasus Penggunaan Industri</h4>
+                <p class="text-slate-300 text-xs leading-relaxed">
+                  Uber surge pricing & routing real-time, sistem deteksi fraud transaksi instan di fintech / perbankan, dan monitoring IoT armada logistik bergerak.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. MEDALLION ARCHITECTURE (LAKEHOUSE) -->
+        <div id="content-medallion" class="tab-content hidden animate-fadeIn">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-7 space-y-6">
+              <div class="gradient-border p-6 sm:p-8">
+                <div class="flex items-center gap-3 mb-4">
+                  <span class="px-3 py-1 rounded-md bg-amber-500/20 text-amber-400 border border-amber-500/30 text-xs font-mono font-bold">Era 2020 - Sekarang (Standar Industri)</span>
+                  <h3 class="text-2xl font-bold text-white">Lakehouse Medallion Architecture</h3>
+                </div>
+                <p class="text-slate-300 text-sm leading-relaxed mb-6">
+                  Standar emas industri modern yang dipopulerkan oleh <strong>Databricks</strong> dan open-source formats seperti <strong>Apache Iceberg</strong> &amp; <strong>Delta Lake</strong>. Arsitektur ini menyatukan kelebihan Data Lake (murah, fleksibel) dengan Data Warehouse (transaksi ACID, kualitas data terjamin).
+                </p>
+
+                <!-- REAL-WORLD ANALOGY -->
+                <div class="p-4 rounded-xl bg-amber-950/30 border border-amber-800/40 mb-6">
+                  <div class="flex items-start gap-3">
+                    <span class="text-2xl">🚰</span>
+                    <div>
+                      <h5 class="text-xs font-bold text-amber-300 uppercase tracking-wider">Analogi Mahasiswa</h5>
+                      <p class="text-slate-300 text-xs mt-1">
+                        <strong>Filtrasi Air Minum 3 Tahap:</strong>
+                        <br><strong>1. Bronze (Air Sumur):</strong> Air tanah mentah ditampung apa adanya (masih ada pasir dan daun).
+                        <br><strong>2. Silver (Filter Karbon):</strong> Air disaring, kuman dan pasir dibuang, tapi belum dikemas.
+                        <br><strong>3. Gold (Air Mineral Galon):</strong> Air siap minum yang sudah higienis, berstandar mutu SNI, dan siap disajikan ke meja konsumen.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3 TIERS DETAIL -->
+                <div class="space-y-3 font-mono text-xs">
+                  <div class="p-4 rounded-xl bg-dark-800 border-l-4 border-amber-700">
+                    <div class="flex items-center justify-between text-amber-500 font-bold mb-1">
+                      <span>🥉 BRONZE TIER (Raw Ingestion Zone)</span>
+                      <span class="text-[10px] px-2 py-0.5 rounded bg-amber-500/10">Append-Only</span>
+                    </div>
+                    <p class="text-slate-300 text-xs font-sans">Menampung data mentah apa adanya dari Kafka, API, atau IoT. Tidak ada filter, tidak ada perubahan tipe data. Berfungsi sebagai jejak audit abadi.</p>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-dark-800 border-l-4 border-slate-400">
+                    <div class="flex items-center justify-between text-slate-300 font-bold mb-1">
+                      <span>🥈 SILVER TIER (Cleansed & Enriched Zone)</span>
+                      <span class="text-[10px] px-2 py-0.5 rounded bg-slate-500/10">Enterprise Truth</span>
+                    </div>
+                    <p class="text-slate-300 text-xs font-sans">Data dibersihkan: null values ditangani, deduplikasi data kembar, schema enforcement, dan join antar tabel relasional. Siap untuk dieksplorasi Data Scientist.</p>
+                  </div>
+
+                  <div class="p-4 rounded-xl bg-dark-800 border-l-4 border-yellow-400">
+                    <div class="flex items-center justify-between text-yellow-400 font-bold mb-1">
+                      <span>🥇 GOLD TIER (Business / Curated Mart)</span>
+                      <span class="text-[10px] px-2 py-0.5 rounded bg-yellow-500/10">High Performance</span>
+                    </div>
+                    <p class="text-slate-300 text-xs font-sans">Data agregat berkinerja tinggi, star schema / dimensional modelling. Dirancang khusus untuk dashboard BI eksekutif dan reporting cepat.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="lg:col-span-5 space-y-6">
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <span>⚖️</span> Kelebihan & Kekurangan
+                </h4>
+                <div class="space-y-3 text-xs">
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Mendukung ACID Transactions:</strong> Tidak ada file korup jika terjadi kegagalan tulis di tengah jalan.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Unified Batch & Streaming:</strong> Bisa ditulis via streaming tapi dibaca via batch SQL secara bersamaan.</span>
+                  </div>
+                  <div class="flex items-start gap-2 p-2.5 rounded-lg bg-emerald-950/20 border border-emerald-800/30 text-emerald-300">
+                    <span class="text-emerald-400 font-bold">✔</span>
+                    <span><strong>Time Travel:</strong> Kemampuan melihat kondisi data pada snapshot masa lalu untuk audit & debugging.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="gradient-border p-6">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-3">Teknologi Utama</h4>
+                <div class="flex flex-wrap gap-2">
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Apache Iceberg</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Delta Lake</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">MinIO S3 / HDFS</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">dbt (Data Build Tool)</span>
+                  <span class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-mono border border-slate-700">Trino / Starburst</span>
+                </div>
+              </div>
+
+              <div class="gradient-border p-6 bg-gradient-to-b from-dark-800 to-dark-900">
+                <h4 class="text-sm font-bold text-white uppercase tracking-wider mb-2">Kasus Penggunaan Industri</h4>
+                <p class="text-slate-300 text-xs leading-relaxed">
+                  Netflix, Shopee, Tokopedia, Gojek, dan perbankan modern yang membutuhkan repositori data terpusat untuk analitik gabungan BI dan AI/ML.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON MATRIX TABLE -->
+  <section id="comparison" class="py-20 bg-dark-800/40 border-t border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold text-cyan-400 tracking-wider uppercase">Executive Comparison</span>
+        <h2 class="text-3xl font-extrabold text-white mt-1">Matriks Perbandingan Lengkap</h2>
+        <p class="text-slate-400 text-sm mt-2">Gunakan tabel ini sebagai contekan cepat saat sidang tugas akhir atau interview kerja.</p>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-slate-700 bg-dark-900 shadow-xl">
+        <table class="w-full text-left text-xs sm:text-sm text-slate-300">
+          <thead class="bg-slate-800/80 text-white uppercase text-[11px] font-mono tracking-wider border-b border-slate-700">
+            <tr>
+              <th class="py-4 px-6">Dimensi Perbandingan</th>
+              <th class="py-4 px-6 text-blue-400">1. Batch Processing</th>
+              <th class="py-4 px-6 text-purple-400">2. Lambda (Hybrid)</th>
+              <th class="py-4 px-6 text-cyan-400">3. Kappa (Stream)</th>
+              <th class="py-4 px-6 text-amber-400">4. Lakehouse Medallion</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800 font-sans">
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="py-4 px-6 font-semibold text-white">Latensi Data</td>
+              <td class="py-4 px-6 text-slate-400">Jam s/d Hari (Tinggi)</td>
+              <td class="py-4 px-6 text-slate-400">Detik & Jam (Dual)</td>
+              <td class="py-4 px-6 text-emerald-400 font-medium">Sub-detik (Sangat Rendah)</td>
+              <td class="py-4 px-6 text-cyan-400 font-medium">Sub-detik s/d Menit (Fleksibel)</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="py-4 px-6 font-semibold text-white">Jumlah Basis Kode (Codebase)</td>
+              <td class="py-4 px-6 text-slate-400">1 (Murni Batch)</td>
+              <td class="py-4 px-6 text-red-400 font-medium">2 (Duplikasi Kode)</td>
+              <td class="py-4 px-6 text-emerald-400 font-medium">1 (Single Stream Code)</td>
+              <td class="py-4 px-6 text-emerald-400 font-medium">1 (Modular SQL / PySpark)</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="py-4 px-6 font-semibold text-white">Dukungan Transaksi ACID</td>
+              <td class="py-4 px-6 text-slate-400">Tergantung DBMS Target</td>
+              <td class="py-4 px-6 text-slate-400">Terbatas</td>
+              <td class="py-4 px-6 text-slate-400">Log-Level Guarantee</td>
+              <td class="py-4 px-6 text-amber-400 font-bold">Penuh (Iceberg / Delta)</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="py-4 px-6 font-semibold text-white">Kompleksitas Perawatan (Maintenance)</td>
+              <td class="py-4 px-6 text-emerald-400 font-medium">Rendah</td>
+              <td class="py-4 px-6 text-red-400 font-bold">Sangat Tinggi</td>
+              <td class="py-4 px-6 text-yellow-400 font-medium">Sedang</td>
+              <td class="py-4 px-6 text-cyan-400 font-medium">Terstruktur & Rapi</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="py-4 px-6 font-semibold text-white">Format Penyimpanan Standar</td>
+              <td class="py-4 px-6 font-mono text-xs">CSV, SequenceFile, Parquet</td>
+              <td class="py-4 px-6 font-mono text-xs">HDFS Blocks + NoSQL</td>
+              <td class="py-4 px-6 font-mono text-xs">Kafka Commit Logs</td>
+              <td class="py-4 px-6 font-mono text-xs text-amber-300">Parquet + Metadata JSON / Avro</td>
+            </tr>
+            <tr class="hover:bg-slate-800/30 transition">
+              <td class="py-4 px-6 font-semibold text-white">Kesesuaian AI / ML Modeling</td>
+              <td class="py-4 px-6 text-slate-400">Bagus untuk training data statis</td>
+              <td class="py-4 px-6 text-slate-400">Rumit sinkronisasi fitur</td>
+              <td class="py-4 px-6 text-slate-400">Bagus untuk Online Inference</td>
+              <td class="py-4 px-6 text-emerald-400 font-bold">Sangat Sempurna (Time-Travel + Clean)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAPSTONE RECOMMENDATION GUIDE -->
+  <section id="capstone-guide" class="py-20">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="gradient-border p-8 sm:p-12 relative overflow-hidden glow-cyan">
+        <div class="absolute -top-24 -right-24 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-lg">💡</span>
+          <h3 class="text-2xl font-bold text-white">Panduan Memilih untuk Capstone Anda</h3>
+        </div>
+
+        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
+          Jika Anda ingin membuat proyek Capstone yang dinilai <strong>solid, berbobot tinggi, dan berstandar industri</strong> oleh dosen penguji:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-sans mb-8">
+          <div class="p-4 rounded-xl bg-dark-900 border border-slate-800">
+            <h5 class="font-bold text-cyan-400 text-sm mb-1">Rekomendasi Utama: Kombinasi Kappa + Medallion</h5>
+            <p class="text-slate-400 leading-relaxed mt-1">
+              Gunakan aliran data event live (Kappa) yang diproses via <strong>Kafka &amp; Spark Structured Streaming</strong>, kemudian simpan datanya ke dalam <strong>MinIO</strong> dengan struktur folder tier <strong>Bronze, Silver, dan Gold (Medallion)</strong>.
+            </p>
+          </div>
+
+          <div class="p-4 rounded-xl bg-dark-900 border border-slate-800">
+            <h5 class="font-bold text-purple-400 text-sm mb-1">Mengapa Sangat Dinilai Tinggi?</h5>
+            <p class="text-slate-400 leading-relaxed mt-1">
+              Anda membuktikan penguasaan terhadap pemrosesan <em>real-time</em> (latensi rendah) sekaligus tata kelola data jangka panjang (*data governance* dan kualitas data). Ini adalah keahlian yang paling dicari perusahaan saat ini.
+            </p>
+          </div>
+        </div>
+
+        <!-- GITHUB PAGES READY INSTRUCTIONS -->
+        <div class="border-t border-slate-800 pt-6">
+          <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Langkah Publikasi ke GitHub Pages:</h4>
+          <div class="bg-dark-900 p-4 rounded-xl font-mono text-xs text-slate-300 border border-slate-800 space-y-1">
+            <p><span class="text-slate-500"># 1. Masuk ke folder proyek</span></p>
+            <p class="text-cyan-300">cd "d:\Matkul baru\Big Data infrastructure\bigdata_architecture_infographics"</p>
+            <p><span class="text-slate-500"># 2. Inisialisasi git dan push ke repo Anda</span></p>
+            <p class="text-cyan-300">git init && git add . && git commit -m "feat: Big Data Architecture Infographic Web"</p>
+            <p class="text-cyan-300">git branch -M main && git remote add origin &lt;URL_REPO_GITHUB_ANDA&gt; && git push -u origin main</p>
+            <p><span class="text-slate-500"># 3. Di GitHub Settings -> Pages -> pilih branch 'main' / root -> Save. Web langsung aktif online!</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 border-t border-slate-800 text-center text-xs text-slate-500">
+    <p>Dibuat untuk Mata Kuliah Infrastruktur dan Teknologi Big Data (CDK3DAB3) • Sains Data Telkom University</p>
+    <p class="mt-1 font-mono text-[11px] text-slate-600">Docker • Kafka • Spark • Iceberg • ClickHouse • Grafana</p>
+  </footer>
+
+  <!-- IMAGE ZOOM MODAL -->
+  <div id="imageModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-4 transition-opacity duration-300">
+    <div class="relative max-w-6xl w-full max-h-[90vh] flex flex-col items-center">
+      <button onclick="closeModal()" class="absolute -top-12 right-0 px-4 py-2 text-white bg-slate-800 hover:bg-slate-700 rounded-lg text-sm font-semibold border border-slate-600 transition">
+        ✕ Tutup (Esc)
+      </button>
+      <img id="modalImg" src="" alt="Zoomed Poster" class="max-w-full max-h-[85vh] rounded-xl object-contain border border-slate-700 shadow-2xl">
+      <div class="mt-4 flex gap-4">
+        <a id="downloadBtn" href="assets/bigdata_poster.jpg" download="BigData_Architectures_Poster.jpg" class="px-5 py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-dark-900 font-bold text-xs shadow-lg transition">
+          ⬇ Unduh Poster (HD)
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE SCRIPT -->
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('block'));
+
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('bg-cyan-500', 'text-white', 'shadow-md');
+        btn.classList.add('text-slate-400');
+      });
+
+      const activeContent = document.getElementById('content-' + tabId);
+      if (activeContent) {
+        activeContent.classList.remove('hidden');
+        activeContent.classList.add('block');
+      }
+
+      const activeBtn = document.getElementById('tab-' + tabId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-cyan-500', 'text-white', 'shadow-md');
+        activeBtn.classList.remove('text-slate-400');
+      }
+    }
+
+    function openModal(imgSrc) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      modalImg.src = imgSrc;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
